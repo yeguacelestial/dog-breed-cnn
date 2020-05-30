@@ -134,3 +134,4 @@ Data/
 *.zip
 __MACOSX/
 .vscode/
+*.npz
