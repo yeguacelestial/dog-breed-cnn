@@ -25,3 +25,16 @@ from IPython.display import display
 
 from zipfile import ZipFile
 from io import BytesIO
+
+# 2 - UNZIP FILES
+
+# Unzip the train and test zip file
+archive_train = ZipFile("Data/test.zip", "r")
+archive_test = ZipFile("Data/train.zip", "r")
+
+# This line shows the 5 first image name of the train database
+print(archive_train.namelist()[0:5])
+
+# This line shows the number of images in the train database, 
+# noted that we must remove the 1st value (column header)
+print(len(archive_train.namelist()[:]) - 1)
