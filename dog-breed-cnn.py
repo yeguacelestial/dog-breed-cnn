@@ -77,3 +77,25 @@ def main_breeds(labels_raw, Nber_breeds, all_breeds='TRUE'):
     labels_filtered_index = np.where(labels_raw_np == main_labels)
 
     return labels_filtered_index
+
+# Create one-hot labels
+def matrix_Bin(labels):
+    labels_bin = np.array([])
+
+    labels_name, labels0 = np.unique(labels, return_inverse=True)
+    labels0
+
+    for _, i in enumerate(itemfreq(labels0)[:,0].astype(int)):
+        labels_bin0 = np.where(labels0 == itemfreq(labels0)[:,0][i], 1., 0.)
+        labels_bin0 = labels_bin0.reshape(1, labels_bin0.shape[0])
+
+        if (labels_bin.shape[0] == 0):
+            labels_bin = labels_bin0
+        else:
+            labels_bin = np.concatenate((labels_bin,labels_bin0), axis=0)
+    
+    print(f"Nbver SubVariables {itemfreq(labels0)[:,0].shape[0]}")
+    labels_bin = labels_bin.transpose()
+    print(f"Shape: {labels_bin.shape}")
+
+    return labels_name, labels_bin
