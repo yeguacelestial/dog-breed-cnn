@@ -135,3 +135,4 @@ Data/
 __MACOSX/
 .vscode/
 *.npz
+bottleneck_features/
