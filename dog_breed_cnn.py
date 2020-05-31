@@ -20,6 +20,18 @@ from keras.applications.resnet50 import preprocess_input, decode_predictions
 # define ResNet50 model
 ResNet50_mod = ResNet50(weights='imagenet')
 
+# STEP 3
+from keras.layers import Conv2D, MaxPooling2D, GlobalAveragePooling2D
+from keras.layers import Dropout, Flatten, Dense
+from keras.models import Sequential
+# Preprocessing data
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+# STEP 5
+from keras.callbacks import ModelCheckpoint
+from extract_bottleneck_features import *
+
 # STEP 0 - Import datasets
 # Define function to load train, test, and validation datasets
 def load_dataset(path):
@@ -64,3 +76,15 @@ def ResNet50_predict_labels(img_path):
 def dog_detector(img_path):
     prediction = ResNet50_predict_labels(img_path)
     return ((prediction <= 268) & (prediction >= 151))
+
+
+# Function that takes path of an image as an input and returns the dog breed predicted by the model
+def classify_dog_breed(img_path, ResNet50_model):
+    img = path_to_tensor(img_path)
+    bottleneck_feature = extract_Resnet50(img)
+
+    predictions = ResNet50_model.predict(bottleneck_feature)
+    prediction = np.argmax(predictions)
+    dog_names[prediction].split('.')[-1]
+    print(f"This image looks like a {dog_names[prediction].split('.')[-1]}")
+    return dog_names[prediction].split('.')[-1]
